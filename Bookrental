@@ -1,0 +1,144 @@
+import java.util.Arrays;
+
+class Book {
+    String nameOfBook;
+    String authorFirstName;
+    String authorLastName;
+    String genre;
+    String ISBN;
+    String publishDate;
+    double price; // Changed to double for price
+    boolean inStock; // Indicates whether the book is in stock
+
+    public Book(String nameOfBook, String authorFirstName, String authorLastName,
+                String genre, String ISBN, String publishDate, double price) {
+        this.nameOfBook = nameOfBook;
+        this.authorFirstName = authorFirstName;
+        this.authorLastName = authorLastName;
+        this.genre = genre;
+        this.ISBN = ISBN;
+        this.publishDate = publishDate;
+        this.price = price;
+        this.inStock = true; // New book is initially in stock
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
+    }
+}
+
+class Person {
+    String firstName;
+    String lastName;
+    int age;
+
+    public Person(String firstName, String lastName, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        String selectedItem;
+		System.out.println("firstName: ");
+        System.out.println();
+    }
+}
+
+class Library {
+    String[] customerArray;
+    String date;
+
+    Book[] books;
+
+    public Library() {
+        this.books = new Book[10]; 
+    }
+
+    public String getBookTitle(String identifier) {
+        for (Book book : books) {
+            if (book != null && book.ISBN.equals(identifier)) {
+                return book.nameOfBook;
+            }
+        }
+        return "Did not find book";
+    }
+
+    public void addNewBook(Book newBook) {
+        // Added a new book
+        for (int i = 0; i < books.length; i++) {
+            if (books[i] == null) {
+                books[i] = newBook;
+                break;
+            }
+        }
+    }
+
+    public void removeFromInventory(String identifier) {
+        // Remove a book from inventory based on identifier (ISBN)
+        for (int i = 0; i < books.length; i++) {
+            if (books[i] != null && books[i].ISBN.equals(identifier)) {
+                books[i].setInStock(false);
+                books[i] = null;
+                break;
+            }
+        }
+    }
+
+    public boolean orderNewBook() {
+        // In Stock
+        return true;
+    }
+
+    public void stockBook(Book book) {
+        // New Book Added
+        for (int i = 0; i < books.length; i++) {
+            if (books[i] == null) {
+                books[i] = book;
+                break;
+            }
+        }
+    }
+
+    public String checkoutBook() {
+        // Return Date
+        return "2023-10-01"; 
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Library myLib = new Library();
+
+        // Creating a book
+        Book book1 = new Book("Book Title 1", "Author First 1", "Author Last 1",
+                "Genre 1", "ISBN001", "2023-10-01", 19.99);
+
+        // Adding a book to the library
+        myLib.addNewBook(book1);
+
+     
+        System.out.println("Book Details:");
+        System.out.println("Name of Book: " + book1.nameOfBook);
+        System.out.println("Author's First Name: " + book1.authorFirstName);
+        System.out.println("Author's Last Name: " + book1.authorLastName);
+        System.out.println("Genre: " + book1.genre);
+        System.out.println("ISBN: " + book1.ISBN);
+        System.out.println("Publish Date: " + book1.publishDate);
+        System.out.println("Price: 19.99");
+
+        // Checking if the book is in stock
+        System.out.println("Is the book in stock? " + book1.isInStock());
+
+        // Checking out a book
+        myLib.checkoutBook();
+        System.out.println("Checked Out:");
+
+        // Removing a book from inventory
+        myLib.removeFromInventory("ISBN001");
+
+        // Checking if the book is in stock after removal
+        System.out.println("Is the book in stock after removal? " + book1.isInStock());
+    }
+}
